@@ -16,12 +16,12 @@ Note: 'You don't need your CPU to nither sr-iov nor Gvt-g
 My CPU is and 11th gen Intel and it doesn't support both LOL'
 
 # 2. Iommu checking via the command "lspci -nnk" like this:
-
+```
 0000:01:00.0 3D controller [0302]: NVIDIA Corporation GP107M [GeForce MX350] [10de:1c94] (rev a1)
 	Subsystem: Lenovo Device [17aa:3f9b]
 	Kernel driver in use: vfio-pci
 	Kernel modules: nvidiafb, nouveau, nvidia_drm, nvidia
-
+```
 A. Rememeber both '0000:01:00.0' & '[10de:1c94]' & '[17aa:3f9b]'  (it's something else for you!) ... write them somewhere!
 
 B. Also dont forget that it has to be a "3D controller" to be considered as muxless !!! if its named "VGA compatible" then you have to follow the Muxed laptop guide! """Bland Man Studio"""
@@ -30,7 +30,6 @@ B. Also dont forget that it has to be a "3D controller" to be considered as muxl
 
 A. under NixOS we simply add these lines and we're good to go! (Due to your linux distro this part is different for you!)
 ```
-################################
  config = {
     boot = {
       kernelParams = [
@@ -46,7 +45,6 @@ A. under NixOS we simply add these lines and we're good to go! (Due to your linu
       ];
     }
  }
-################################
 ```
 # 4. Download all of these files:
 
