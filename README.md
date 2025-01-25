@@ -69,7 +69,7 @@ H. Patched file for your ease of mind: https://drive.google.com/file/d/1iocVGH2R
 
 I. Make sure all virtualization package stuffs are installed on your desired linux distro like libvirt, qemu and virtiofs!
 
-J. Heres the ready to go xml config for the vm: https://github.com/ArshamEbr/Nixo/blob/main/scripts/win11.xml !!! Dont FORGET TO CHECK PART 6.D to modify it for your system !!!
+J. Heres the ready to go xml config for the vm: https://github.com/ArshamEbr/Nixo/blob/main/scripts/win11.xml !!! Dont FORGET TO CHECK PART 7.D to modify it for your system !!!
 
 # 5. Let's extract your vbios safely:
 
