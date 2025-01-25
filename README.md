@@ -386,11 +386,11 @@ i would recommnad Version: B7-rc1 cuz we downloaded this version's windows binar
 
 # I got error shm permission denied!
 in NixOs we add this 
-
+```
     systemd.tmpfiles.rules = [
     "f /dev/shm/looking-glass 0660 arsham qemu-libvirtd -"
   ];
-
+```
 so do something similar in your desired linux distro!
 
 # Do i have to change the shm Size?
