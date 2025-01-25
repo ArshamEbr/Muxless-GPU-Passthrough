@@ -16,6 +16,9 @@ Note: 'You don't need your CPU to nither sr-iov nor Gvt-g
 My CPU is and 11th gen Intel and it doesn't support both LOL'
 
 # 2. Iommu checking via the command "lspci -nnk" like this:
+
+Do `lspci -nnk`
+
 ```
 0000:01:00.0 3D controller [0302]: NVIDIA Corporation GP107M [GeForce MX350] [10de:1c94] (rev a1)
 	Subsystem: Lenovo Device [17aa:3f9b]
