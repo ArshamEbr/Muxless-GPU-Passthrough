@@ -12,8 +12,8 @@ D. Secure Boot !!!DISABLE THIS ONE!!!
 
 heres an example of my bios: https://download.lenovo.com/bsco/index.html#/textsimulator/IdeaPad%203-15ITL6%20(82H8)
 
-Note: 'You don't need your CPU to nither sr-iov nor Gvt-g 
-My CPU is and 11th gen Intel and it doesn't support both LOL'
+Note: 'You don't need your CPU to support nither sr-iov nor Gvt-g 
+My CPU is and 11th gen Intel and it doesn't support both ```LOL```
 
 # 2. Iommu checking via the command `lspci -nnk` like this:
 
