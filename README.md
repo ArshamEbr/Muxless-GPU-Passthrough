@@ -75,7 +75,8 @@ J. Heres the ready to go xml config for the vm: https://github.com/ArshamEbr/Nix
 A. Download your bios update file (mostly an .exe file) from your laptop's manufacturer website (for example for me it's lenovo)
 
 B. Download VbiosFinder: "git clone https://github.com/coderobe/VBiosFinder.git"
-b1: copy your bios.exe to vbiosfinder folder: "mv bios.exe VBiosFinder/"
+
+B1: copy your bios.exe to vbiosfinder folder: "mv bios.exe VBiosFinder/"
 
 D. Install these dependencies based on your distro!: "ruby ruby-bundler innoextract p7zip upx"
 
@@ -89,7 +90,7 @@ E3: build it: "make"
 
 E4: move it over to VbiosFinder's 3rdparty folder: "mv rom-parser ../VBiosFinder/3rdparty"
 
-e5: go back to where you was: "cd .."
+E5: go back to where you was: "cd .."
 
 F. Install UEFIExtract (Run these command after eachother in sequance!):
 
