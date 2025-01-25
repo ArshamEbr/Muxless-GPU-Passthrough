@@ -159,7 +159,7 @@ F1. edit the ssdt.asl file: `Vim ssdt.asl`
 
 F2. change line 37 to match VROM_BIN_LEN that we memorized earlier!:
 
-#### Name (RVBS, 238080) // size of ROM in bytes ####
+`Name (RVBS, 238080) // size of ROM in bytes`
 
 G. Run the following commands in sequance and dont mind the errors they're fine as long as Ssdt.aml is created!
 
@@ -239,14 +239,14 @@ D3. scroll down till you find `<hostdev>`
     </hostdev>
 ```
 D4. scroll to the end section and you will see these lines:
-
+```
   <qemu:commandline>
     <qemu:arg value="-acpitable"/>
     <qemu:arg value="file=/home/arsham/ssdt1.dat"/> ### change it to the path that you downloaded your fake battery file! ###
   </qemu:commandline>
-
+```
 D5. under that you'll see these lines change them ACCURATLY!!!
-
+```
   <qemu:override>
     <qemu:device alias="hostdev0">
       <qemu:frontend>
@@ -257,11 +257,11 @@ D5. under that you'll see these lines change them ACCURATLY!!!
       </qemu:frontend>
     </qemu:device>
   </qemu:override>
-
+```
 !!!NOTE:'[10de:1c94]' AND '[17aa:3f9b]' are from Part 2.A also to convert these values from hex to integer use this online converter: https://www.rapidtables.com/convert/number/hex-to-decimal.html 
 
-D6. scroll up under <devices> find :
-
+D6. scroll up under `<devices>` find :
+```
    <filesystem type="mount" accessmode="passthrough">
       <driver type="virtiofs"/>
       <binary path="/etc/profiles/per-user/arsham/bin/virtiofsd"/> ### change this path to the output of this command: "which virtiofsd" for example mine was: /etc/profiles/per-user/arsham/bin/virtiofsd ###
@@ -269,8 +269,8 @@ D6. scroll up under <devices> find :
       <target dir="Home"/> ### the name of the mounted path ###
       <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
     </filesystem>
-
-D7. scroll up under <memory> change the value to the desired ram that you want to pass to the vm!
+```
+D7. scroll up under `<memory>` change the value to the desired ram that you want to pass to the vm!
 
 D8. under cpu section pass 4 cores to the vm and tick the passthrough!
 
@@ -286,19 +286,19 @@ A. Bypass the requirments:
 
 A1. SHIFT + F10 to open the command prompt while on the first page of installation
 
-A2. Type regedit and press enterA
+A2. Type `regedit` and press enter
 
-A3. Navigate to HKEY_LOCAL_MACHINE\SYSTEM\Setup
+A3. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\Setup`
 
-A4. Right-click on the setup folder then select New -> Key And Name it "LabConfig" Without the quotation Marks
+A4. Right-click on the setup folder then select New -> Key And Name it `LabConfig`
 
-A5. Inside the LabConfig key, right-click in the right panel and select New -> DWORD (32-bit) value and name it "BypassTPMCheck" then set its value to 1
+A5. Inside the `LabConfig` folder, right-click in the right panel and select New -> DWORD (32-bit) value and name it `BypassTPMCheck` then set its value to `1`
 
-A6. Create another DWORD (32-bit) value named "BypassSecureBootCheck" and set it to 1 too
+A6. Create another DWORD (32-bit) value named `BypassSecureBootCheck` and set it to `1` too
 
 A7. Close the window and continue the installation
 
-B. We have to load the virtio drivers fisrt:
+B. We have to load the virtio drivers first:
 
 B1. click on Load Drivers -> virtio.iso you mounted the load them up and voila now it showed up!
 
@@ -310,7 +310,7 @@ A1. Spice drivers
 
 A2. LookingGlass (windows binary)
 
-A3. Fake Display driver and copy that folder somewhere like C:\Program Files\SOME_NAME
+A3. Fake Display driver and copy that folder somewhere like `C:\Program Files\SOME_NAME`
 
 A4. Virtio drivers
 
@@ -318,7 +318,7 @@ A5. your dgpu drivers
 
 A6. WinFSD (set its service to automatic from manually)
 
-B. Shutdown the vm and add the network interface and run this command "sudo virsh net-start default" for auto starting network thing, then start the vm again
+B. Shutdown the vm and add the network interface and run this command `sudo virsh net-start default` for auto starting network thing, then start the vm again
 
 C. we have to create a .bat file and copy it over to the fake display driver folder!
 
@@ -326,7 +326,7 @@ C1. Do Right-click and create a .txt file
 
 C2. copy the following commands inside it (COPY PASTE)
 
-############################################
+```
 @cd /d "%~dp0"
 
 @goto %PROCESSOR_ARCHITECTURE%
@@ -337,9 +337,8 @@ C2. copy the following commands inside it (COPY PASTE)
 @goto end
 :end
 exit
-############################################
-
-C3. Save it and Rename the end of the file from .txt to .bat for example: DGPU.txt -> DGPU.bat
+```
+C3. Save it and Rename the end of the file from `.txt` to `.bat` for example: DGPU`.txt` -> DGPU`.bat`
 
 C4. copy the file over to the Fake display driver
 
@@ -349,13 +348,13 @@ D1. Open task scheduler and create a new basic task and follow:
 
 D2. Give it anyname you want then click next
 
-D3. select "When i log on" go next
+D3. select `When i log on` go next
 
-D4. Select "Start a Program" click next
+D4. Select `Start a Program` click next
 
-D5. Browse to the .bat file we created and finish
+D5. Browse to the `.bat` file we created and finish
 
-D6. Click on the new task that we just created and tick the "Run with Highest Privileges" and done!
+D6. Click on the new task that we just created and tick the `Run with Highest Privileges` and done!
 
 D69. what you just did creates a fake display at startup so we could use lookingGlass without needing a Real display!!!
 
@@ -363,7 +362,7 @@ E. now we create another task for LookingGlass itself...
 
 E1. run CMD with admin permissions
 
-E2. Run the following command: "SCHTASKS /Create /TN "Looking Glass" /SC  ONLOGON /RL HIGHEST /TR 'C:\Program Files\Looking Glass (host)\looking-glass-host.exe'" Done
+E2. Run the following command: `SCHTASKS /Create /TN "Looking Glass" /SC  ONLOGON /RL HIGHEST /TR 'C:\Program Files\Looking Glass (host)\looking-glass-host.exe'` Done
 
 
 # 10. Finishing touches
@@ -372,12 +371,12 @@ A. shutdown the vm and remove that display from vm's info cuz we're now using th
 
 B. (Optional) Adding Hyprland Keybinds for ease of access!
 
-"$Primary$Alternate, p, exec, virsh -c qemu:///system start Win11 ; looking-glass-client -F"
-"$Primary$Alternate, o, exec, virsh -c qemu:///system shutdown Win11"
+`$Primary$Alternate, p, exec, virsh -c qemu:///system start Win11 ; looking-glass-client -F`
+`$Primary$Alternate, o, exec, virsh -c qemu:///system shutdown Win11`
 
-B1. Replace "Win11" with your vm name that you created!
+B1. Replace `Win11` with your vm name that you created!
 
-B2. also "$Primary$Alternate" is my personal combo so you can change them to your liking!
+B2. also `$Primary$Alternate` is my personal combo so you can change them to your liking!
 
 # FAQ
 
@@ -412,7 +411,11 @@ Just remove the evdev mouse and keyborad that i added... also check BlandManStud
 # Sources
 
 https://lantian.pub/en/article/modify-computer/laptop-intel-nvidia-optimus-passthrough.lantian/
+
 https://looking-glass.io/
+
 https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
+
 https://github.com/tianocore/edk2
+
 https://kilo.bytesize.xyz/gpu-passthrough-on-nixos
