@@ -29,7 +29,7 @@ B. Also dont forget that it has to be a "3D controller" to be considered as muxl
 # 3 Loading up VFIO stuff to stop the host from using it:
 
 A. under NixOS we simply add these lines and we're good to go! (Due to your linux distro this part is different for you!)
-
+```
 ################################
  config = {
     boot = {
@@ -47,7 +47,7 @@ A. under NixOS we simply add these lines and we're good to go! (Due to your linu
     }
  }
 ################################
-
+```
 # 4. Download all of these files:
 
 A. virtio-drivers.iso (for better performance with virtio devices) https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
