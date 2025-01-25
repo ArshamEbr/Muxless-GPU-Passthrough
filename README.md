@@ -15,7 +15,7 @@ heres an example of my bios: https://download.lenovo.com/bsco/index.html#/textsi
 Note: 'You don't need your CPU to nither sr-iov nor Gvt-g 
 My CPU is and 11th gen Intel and it doesn't support both LOL'
 
-# 2. Iommu checking via the command "lspci -nnk" like this:
+# 2. Iommu checking via the command `lspci -nnk` like this:
 
 Do `lspci -nnk` and find your dgpu named 3D controller
 
@@ -25,9 +25,9 @@ Do `lspci -nnk` and find your dgpu named 3D controller
 	Kernel driver in use: vfio-pci
 	Kernel modules: nvidiafb, nouveau, nvidia_drm, nvidia
 ```
-A. Rememeber '0000:01:00.0' & '[10de:1c94]' & '[17aa:3f9b]'  (it's something else for you!) ... write them somewhere!
+A. Rememeber `0000:01:00.0` & `[10de:1c94]` & `[17aa:3f9b]`  (it's something else for you!) ... write them somewhere!
 
-B. Also dont forget that it has to be a "3D controller" to be considered as muxless !!! if its named "VGA compatible" then you have to follow the Muxed laptop guide! """Bland Man Studio"""
+B. Also dont forget that it has to be a `3D controller` to be considered as muxless !!! if its named `VGA compatible` then you have to follow the Muxed laptop guide! `Bland Man Studio` https://www.youtube.com/watch?v=m8xj2Py8KPc&t=485s
 
 # 3 Loading up VFIO stuff to stop the host from using it:
 
@@ -139,7 +139,7 @@ A3: get inside: `cd edk2`
 
 A4: Download all the requirments: `git submodule update --init`
 
-B. Download these dependencies packages due to your desired linux distro: `git python2 iasl nasm subversion perl-libwww vim dos2unix gcc5`
+B. Download these dependencies packages due to your desired linux distro: "git python2 iasl nasm subversion perl-libwww vim dos2unix gcc5"
 
 C. get inside: `cd edk2/OvmfPkg/AcpiPlatformDxe`
 
@@ -400,7 +400,7 @@ Most likely no... cuz i already set that to 64MB so its sufficient for most reso
 Run your gpu driver installer and it'll install the drivers for you
 
 # I got error 43 in device manager for my dgpu
-COPY-PASTE the my config.xml and THEN modify it.. cuz theres always something that we miss to add or remove
+COPY-PASTE my config.xml and THEN modify it.. cuz theres always something that we miss to add or remove
 
 # My system Freezes and i have to force reboot after running the vm!
 Modify the Ram section and give only 80 percent of the ram that your system have
