@@ -75,45 +75,45 @@ J. Heres the ready to go xml config for the vm: https://github.com/ArshamEbr/Nix
 
 A. Download your bios update file (mostly an .exe file) from your laptop's manufacturer website (for example for me it's lenovo)
 
-B. Download VbiosFinder: "git clone https://github.com/coderobe/VBiosFinder.git"
+B. Download VbiosFinder: `git clone https://github.com/coderobe/VBiosFinder.git`
 
-B1: copy your bios.exe to vbiosfinder folder: "mv bios.exe VBiosFinder/"
+B1: copy your bios.exe to vbiosfinder folder: `mv bios.exe VBiosFinder/`
 
 D. Install these dependencies based on your distro!: "ruby ruby-bundler innoextract p7zip upx"
 
 E. Install rom-parser (Run these command after eachother in sequance!):
 
-E1: Download Rom-Parser "git clone https://github.com/awilliam/rom-parser.git"
+E1: Download Rom-Parser `git clone https://github.com/awilliam/rom-parser.git`
 
-E2: loacte into there: "cd rom-parser"
+E2: loacte into there: `cd rom-parser`
 
-E3: build it: "make"
+E3: build it: `make`
 
-E4: move it over to VbiosFinder's 3rdparty folder: "mv rom-parser ../VBiosFinder/3rdparty"
+E4: move it over to VbiosFinder's 3rdparty folder: `mv rom-parser ../VBiosFinder/3rdparty`
 
-E5: go back to where you was: "cd .."
+E5: go back to where you was: `cd ..`
 
 F. Install UEFIExtract (Run these command after eachother in sequance!):
 
-F1: Download UEFIExtract "git clone https://github.com/LongSoft/UEFITool.git -b new_engine"
+F1: Download UEFIExtract `git clone https://github.com/LongSoft/UEFITool.git -b new_engine`
 
-F2: locate into there: "cd UEFITool"
+F2: locate into there: `cd UEFITool`
 
-F3: run the script: "./unixbuild.sh"
+F3: run the script: `./unixbuild.sh`
 
-F4: move it over to VbiosFinder's 3rdparty folder: "mv UEFIExtract/UEFIExtract ../VBiosFinder/3rdparty"
+F4: move it over to VbiosFinder's 3rdparty folder: `mv UEFIExtract/UEFIExtract ../VBiosFinder/3rdparty`
 
-F5: go back to where you was: "cd .."
+F5: go back to where you was: `cd ..`
 
 G. Extract vBIOS
 
-G1: go to Downloaded VbiosFinder dir: "cd VBiosFinder"
+G1: go to Downloaded VbiosFinder dir: `cd VBiosFinder`
 
-G2: run this bundler: "bundle update --bundler"
+G2: run this bundler: `bundle update --bundler`
 
-G3: run this bundle installer: "bundle install --path=vendor/bundle"
+G3: run this bundle installer: `bundle install --path=vendor/bundle`
 
-G4: Extracting your vbios from the copied bios.exe: "./vbiosfinder extract bios.exe"
+G4: Extracting your vbios from the copied bios.exe: `./vbiosfinder extract bios.exe`
 
 G5: print the output: "ls output" And Note!!!
 There will be one or a few files in the output folder for example:
@@ -158,6 +158,7 @@ F. Download this file right there: `wget https://github.com/jscinoz/optimus-vfio
 F1. edit the ssdt.asl file: `Vim ssdt.asl`
 
 F2. change line 37 to match VROM_BIN_LEN that we memorized earlier!:
+
 #### Name (RVBS, 238080) // size of ROM in bytes ####
 
 G. Run the following commands in sequance and dont mind the errors they're fine as long as Ssdt.aml is created!
@@ -171,6 +172,7 @@ G3: `xxd -i vrom_table.aml | sed 's/vrom_table_aml/vrom_table/g' > vrom_table.h`
 G4: copy both vrom.h and vrom_table.h to here:
 
 `cp vrom.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/`
+
 `cp vrom_table.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/`
 
 H. lets go back to the main edk2 dir: `cd ../..`
@@ -212,11 +214,12 @@ D. inside the info section of the vm copy-paste my config.xml (DO NOT run or App
 
 D1: scroll down til the `<devices>` section:
 
-`<emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>` ### Modify this path with the output of this command: !!`which qemu-system-x86_64`!! for example my output was 
+`<emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>` ### Modify this path with the output of this command: `which qemu-system-x86_64` 
+for example my output was 
 `/run/current-system/sw/bin/qemu-system-x86_64`
 
-D2. scroll down a bit under <devices> find:
-
+D2. scroll down a bit under `<devices>` find:
+```
    <disk type="file" device="disk">
       <driver name="qemu" type="qcow2" discard="unmap"/>
       <source file="/var/lib/libvirt/images/Win11.qcow2"/> ### Replace this path with your own created virtual disk!!! ###
@@ -224,9 +227,9 @@ D2. scroll down a bit under <devices> find:
       <boot order="1"/>
       <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </disk>
-
-D3. scroll down till you find <hostdev> 
-
+```
+D3. scroll down till you find `<hostdev>`
+```
    <hostdev mode="subsystem" type="pci" managed="yes">
       <source>
         <address domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
@@ -234,7 +237,7 @@ D3. scroll down till you find <hostdev>
       <rom bar="off"/>
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0" multifunction="on"/> ### change this pci address to your dgpu iommu group!!! Check Part 2.A for more info
     </hostdev>
-
+```
 D4. scroll to the end section and you will see these lines:
 
   <qemu:commandline>
