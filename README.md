@@ -127,6 +127,8 @@ G6: copy your vbios file to your home dir and rename it to vbios.rom: "cp vbios_
 now we can continue to the next part!
 
 # 6. Adding the Extracted Vbios.rom file to VM's OVMF!:
+### Special Thanks to my friend Celes Renata For helping me on this part! :)
+
 Note: Based on some reports, UEFI firmware should NEVER be moved once built!!!
 
 A. go somewhere to permanently place the files i'd recommand '/opt' so lets do it:
