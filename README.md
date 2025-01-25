@@ -79,7 +79,7 @@ B. Download VbiosFinder: `git clone https://github.com/coderobe/VBiosFinder.git`
 
 B1: copy your bios.exe to vbiosfinder folder: `mv bios.exe VBiosFinder/`
 
-D. Install these dependencies based on your distro!: "ruby ruby-bundler innoextract p7zip upx"
+D. Install these dependencies based on your distro!: "ruby-dev ruby ruby-bundler innoextract p7zip upx cmake"
 
 E. Install rom-parser (Run these command after eachother in sequance!):
 
@@ -99,9 +99,9 @@ F1: Download UEFIExtract `git clone https://github.com/LongSoft/UEFITool.git -b 
 
 F2: locate into there: `cd UEFITool`
 
-F3: run the script: `./unixbuild.sh`
+F3: run the script: `cmake UEFIExtract` and then run `make`
 
-F4: move it over to VbiosFinder's 3rdparty folder: `mv UEFIExtract/UEFIExtract ../VBiosFinder/3rdparty`
+F4: move it over to VbiosFinder's 3rdparty folder: `mv uefiextract ../VBiosFinder/3rdparty/UEFIExtract`
 
 F5: go back to where you was: `cd ..`
 
@@ -141,7 +141,7 @@ A3: get inside: `cd edk2`
 
 A4: Download all the requirments: `git submodule update --init`
 
-B. Download these dependencies packages due to your desired linux distro: "git python2 iasl nasm subversion perl-libwww vim dos2unix gcc5"
+B. Download these dependencies packages due to your desired linux distro: "git python3 iasl nasm subversion perl vim dos2unix gcc uuid-dev"
 
 C. get inside: `cd edk2/OvmfPkg/AcpiPlatformDxe`
 
