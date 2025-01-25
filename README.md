@@ -17,7 +17,7 @@ My CPU is and 11th gen Intel and it doesn't support both LOL'
 
 # 2. Iommu checking via the command "lspci -nnk" like this:
 
-Do `lspci -nnk`
+Do `lspci -nnk` and find your dgpu named 3D controller
 
 ```
 0000:01:00.0 3D controller [0302]: NVIDIA Corporation GP107M [GeForce MX350] [10de:1c94] (rev a1)
@@ -25,7 +25,7 @@ Do `lspci -nnk`
 	Kernel driver in use: vfio-pci
 	Kernel modules: nvidiafb, nouveau, nvidia_drm, nvidia
 ```
-A. Rememeber both '0000:01:00.0' & '[10de:1c94]' & '[17aa:3f9b]'  (it's something else for you!) ... write them somewhere!
+A. Rememeber '0000:01:00.0' & '[10de:1c94]' & '[17aa:3f9b]'  (it's something else for you!) ... write them somewhere!
 
 B. Also dont forget that it has to be a "3D controller" to be considered as muxless !!! if its named "VGA compatible" then you have to follow the Muxed laptop guide! """Bland Man Studio"""
 
@@ -121,7 +121,7 @@ There will be one or a few files in the output folder for example:
 ### vbios_10de_1c8d.rom
 ### vbios_10de_1c8e.rom
 ### ...
-Going back to the Part 2.a! which we will use the rom file that has the same subsystem id and vendor id name as our Dgpu! for me was "10de:1c94" so Congratulation you found your Vbios!
+Going back to the Part 2.A! which we will use the rom file that has the same subsystem id and vendor id name as our Dgpu! for me was "10de:1c94" so Congratulation you found your Vbios!
 
 G6: copy your vbios file to your home dir and rename it to vbios.rom: "cp vbios_10de_1c94.rom ~/vbios.rom"
 now we can continue to the next part!
@@ -131,21 +131,21 @@ Note: Based on some reports, UEFI firmware should NEVER be moved once built!!!
 
 A. go somewhere to permanently place the files i'd recommand '/opt' so lets do it:
 
-A1: go to '/opt' by running 'sudo su' first then : "cd /opt"
+A1: go to '/opt' by running 'sudo su' first then : `cd /opt`
 
-A2: Download edk2: "git clone https://github.com/tianocore/edk2.git"
+A2: Download edk2: `git clone https://github.com/tianocore/edk2.git`
 
-A3: get inside: "cd edk2"
+A3: get inside: `cd edk2`
 
-A4: Download all the requirments: "git submodule update --init"
+A4: Download all the requirments: `git submodule update --init`
 
-B. Download these dependencies packages due to your desired linux distro: "git python2 iasl nasm subversion perl-libwww vim dos2unix gcc5"
+B. Download these dependencies packages due to your desired linux distro: `git python2 iasl nasm subversion perl-libwww vim dos2unix gcc5`
 
-C. get inside: "cd edk2/OvmfPkg/AcpiPlatformDxe"
+C. get inside: `cd edk2/OvmfPkg/AcpiPlatformDxe`
 
-D. Convert that vbios.rom that we copied earlier to home dir: "xxd -i ~/vbios.rom vrom.h"
+D. Convert that vbios.rom that we copied earlier to home dir: `xxd -i ~/vbios.rom vrom.h`
 
-E. Now we have to edit that converted vrom.h file!: use a text editor that your like to open it... i use vim "Vim vrom.h"
+E. Now we have to edit that converted vrom.h file!: use a text editor that your like to open it... i use vim `Vim vrom.h`
 
 E1: rename the unsigned char array to VROM_BIN
 
@@ -153,38 +153,38 @@ E2: modify the length variable at the end to VROM_BIN_LEN, and memorize the numb
 
 E3: save and exit the editor! :wq :))
 
-F. Download this file right there: "wget https://github.com/jscinoz/optimus-vfio-docs/files/1842788/ssdt.txt -O ssdt.asl"
+F. Download this file right there: `wget https://github.com/jscinoz/optimus-vfio-docs/files/1842788/ssdt.txt -O ssdt.asl`
 
-F1. edit the ssdt.asl file: "Vim ssdt.asl"
+F1. edit the ssdt.asl file: `Vim ssdt.asl`
 
 F2. change line 37 to match VROM_BIN_LEN that we memorized earlier!:
 #### Name (RVBS, 238080) // size of ROM in bytes ####
 
 G. Run the following commands in sequance and dont mind the errors they're fine as long as Ssdt.aml is created!
 
-G1: "iasl -f ssdt.asl"
+G1: `iasl -f ssdt.asl`
 
-G2: "xxd -c1 Ssdt.aml | tail -n +37 | cut -f2 -d' ' | paste -sd' ' | sed 's/ //g' | xxd -r -p > vrom_table.aml"
+G2: `xxd -c1 Ssdt.aml | tail -n +37 | cut -f2 -d' ' | paste -sd' ' | sed 's/ //g' | xxd -r -p > vrom_table.aml`
 
-G3: "xxd -i vrom_table.aml | sed 's/vrom_table_aml/vrom_table/g' > vrom_table.h"
+G3: `xxd -i vrom_table.aml | sed 's/vrom_table_aml/vrom_table/g' > vrom_table.h`
 
 G4: copy both vrom.h and vrom_table.h to here:
 
-"cp vrom.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/"
-"cp vrom_table.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/"
+`cp vrom.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/`
+`cp vrom_table.h /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/`
 
-H. lets go back to the main edk2 dir: "cd ../.."
+H. lets go back to the main edk2 dir: `cd ../..`
 
 I. ok since i already patched the QemuFwCfgAcpi.c file for ya'll you can just copy the downloaded file with yours!:
 
 I1: i assume your downloaded files are in your Downloads folder so you have to copy that file over... so do:
-"cp /home/YOUR_USER/Downloads/QemuFwCfgAcpi.c /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/"
+`cp /home/YOUR_USER/Downloads/QemuFwCfgAcpi.c /opt/edk2/OvmfPkg/Library/AcpiPlatformLib/`
 
 J. now run these commnads in sequance: 
 
-J1: "make -C BaseTools"
+J1: `make -C BaseTools`
 
-J2: ". ./edksetup.sh BaseTools"
+J2: `. ./edksetup.sh BaseTools`
 
 K. now we have to set these variables in Conf/target.txt:
 
@@ -194,7 +194,7 @@ K2:  TARGET_ARCH           = X64
 
 K3:  TOOL_CHAIN_TAG        = GCC5
 
-L: Run "build"
+L: Run `build`
 
 M. after it ran successfully verify file's existence in this dir: /opt/edk2/Build/OvmfX64/DEBUG_GCC5/FV 
 
@@ -210,10 +210,10 @@ C. select the Create vm icon and follow the instructions... before completing it
 
 D. inside the info section of the vm copy-paste my config.xml (DO NOT run or Apply yet!)
 
-D1: scroll down til the <devices> section:
+D1: scroll down til the `<devices>` section:
 
-<emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator> ### Modify this path with the output of this command: !!"which qemu-system-x86_64"!! for example my output was {
-/run/current-system/sw/bin/qemu-system-x86_64}
+`<emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>` ### Modify this path with the output of this command: !!`which qemu-system-x86_64`!! for example my output was 
+`/run/current-system/sw/bin/qemu-system-x86_64`
 
 D2. scroll down a bit under <devices> find:
 
